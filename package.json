@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/tyler-simmons/DotaTimer/issues"
   },
-  "homepage": "https://github.com/tyler-simmons/DotaTimer#readme"
+  "homepage": "https://github.com/tyler-simmons/DotaTimer#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
