@@ -6,6 +6,6 @@ var express = require("express"),
 		res.send("Welcome - root route works");
 	});
 
-	app.listen(process.env.PORT, porcess.end.IP, function(){
+	app.listen(process.env.PORT, process.env.IP, function(){
 		console.log("Server started");
 	});
