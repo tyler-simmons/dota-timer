@@ -1,1 +1,1 @@
-# DotaTimer
+# Dota Support Timer
