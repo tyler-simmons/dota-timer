@@ -7,3 +7,12 @@ body {
 #landingContainer {
     margin-top: 20%;
 }
+#dashboardRow {
+    height: 100%;
+}
+#dashboardContainer {
+    height: 100%;
+}
+.menuEntry {
+    color: black;
+}

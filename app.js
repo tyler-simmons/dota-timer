@@ -9,6 +9,10 @@ var express = require("express"),
 		res.render("landing.ejs");
 	});
 
+	app.get("/dashboard", function(req, res){
+		res.render("dashboard.ejs");
+	});
+
 	app.listen(3000, function(){
 		console.log("Server started successfully");
 	});	
