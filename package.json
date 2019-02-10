@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/tyler-simmons/DotaTimer#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.11"
   }
 }
