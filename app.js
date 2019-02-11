@@ -13,6 +13,10 @@ var express = require("express"),
 		res.render("dashboard.ejs");
 	});
 
+	app.get("/timer", function(req, res){
+		res.render("timer.ejs");
+	});
+
 	app.listen(3000, function(){
 		console.log("Server started successfully");
 	});	
