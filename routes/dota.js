@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.get('/', cors(), function(req, res){
     res.sendFile('timer.JSON', {
-        root: '../data'
+        root: '/data'
     });
 });
 
