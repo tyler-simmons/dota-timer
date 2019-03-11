@@ -1,0 +1,47 @@
+{
+    "timer1" : {
+        "Author" : "Tyler",
+        "Data" : [
+            {
+                "time" : 15,
+                "action" : "Check Map"
+            },
+            {
+                "time" : 30,
+                "action" : "Check Map"
+            },
+            {
+                "time" : 60,
+                "action" : "Stack camps"
+            },
+            {
+                "time" : 90,
+                "action" : "Check Map"
+            },
+            {
+                "time" : 120,
+                "action" : "Stack camps"
+            },
+            {
+                "time" : 180,
+                "action" : "Stack camps"
+            },
+            {
+                "time" : 240,
+                "action" : "Stack camps"
+            },
+            {
+                "time" : 360,
+                "action" : "Grab runes"
+            },
+            {
+                "time" : 420,
+                "action" : "Stack camps"
+            },
+            {
+                "time" : 480,
+                "action" : "Stack camps"
+            }
+        ]
+    }
+}

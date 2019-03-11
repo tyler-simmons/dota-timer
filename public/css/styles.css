@@ -1,18 +1,13 @@
-html {
-    height: 100%;
-}
 body {
-    height: 100%;
+    height: 100vh;
 }
-#landingContainer {
-    margin-top: 20%;
+
+#timer-start {
+    display: block;
+    margin: 5px auto;
 }
-#dashboardRow {
-    height: 100%;
-}
-#dashboardContainer {
-    height: 100%;
-}
-.menuEntry {
-    color: black;
+
+#timer {
+    font-weight: 800;
+    font-size: 2rem;
 }

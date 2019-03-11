@@ -1,22 +1,23 @@
 var express = require("express"),
 		app = express();
 
+const os = require('os');
+
+var dotaRoutes = require('./routes/dota');
+
+app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/views"));
 	
-	app.use(express.static(__dirname + "/public"));
-	app.set('view-engine', 'ejs');
+app.get("/", function(req, res){
+	res.sendFile("index.html");
+});
 
-	app.get("/", function(req, res){
-		res.render("landing.ejs");
-	});
-
-	app.get("/dashboard", function(req, res){
-		res.render("dashboard.ejs");
-	});
-
-	app.get("/timer", function(req, res){
-		res.render("timer.ejs");
-	});
-
-	app.listen(3000, function(){
-		console.log("Server started successfully");
-	});	
+app.use('/api', dotaRoutes);
+	
+app.listen(8080, function(){
+	console.log("Server started successfully");
+	//local network info
+	var networkDevice = os.networkInterfaces();
+	var addr = networkDevice['en0'][1].address;
+	console.log(`Server listening on ${addr}:3000`);
+});	
