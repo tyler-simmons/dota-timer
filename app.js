@@ -4,7 +4,7 @@ var cors = require('cors');
 const os = require('os');
 var port = process.env.PORT || 3000;
 
-app.use(cors());
+
 
 
 var dotaRoutes = require('./routes/dota');
