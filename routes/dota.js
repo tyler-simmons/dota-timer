@@ -9,4 +9,8 @@ router.get('/', cors(), function(req, res){
     });
 });
 
+router.get('/test', function(req, res){
+    res.send("Hello");
+});
+
 module.exports = router;
