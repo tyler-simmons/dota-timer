@@ -2,6 +2,7 @@ var express = require("express"),
 		app = express();
 
 const os = require('os');
+var port = process.env.PORT || 3000;
 
 var dotaRoutes = require('./routes/dota');
 
@@ -14,7 +15,7 @@ app.get("/", function(req, res){
 
 app.use('/api', dotaRoutes);
 	
-app.listen(8080, function(){
+app.listen(port, process.env.IP, function(){
 	console.log("Server started successfully");
 	//local network info
 	var networkDevice = os.networkInterfaces();
