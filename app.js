@@ -18,7 +18,7 @@ app.use('/api', dotaRoutes);
 app.listen(port, process.env.IP, function(){
 	console.log("Server started successfully");
 	//local network info
-	var networkDevice = os.networkInterfaces();
-	var addr = networkDevice['en0'][1].address;
-	console.log(`Server listening on ${addr}:3000`);
+	// var networkDevice = os.networkInterfaces();
+	// var addr = networkDevice['en0'][1].address;
+	// console.log(`Server listening on ${addr}:3000`);
 });	
