@@ -40,7 +40,7 @@ $(document).ready(function(){
 
     var ajaxTimer;
 
-    $.getJSON("/api")
+    $.getJSON("https://dota-timer.herokuapp.com/api")
     .then(function(data) {
         console.log(data.timer1);
         ajaxTimer = data.timer1;
