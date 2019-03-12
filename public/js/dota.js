@@ -1,3 +1,4 @@
+//hello
 //Basic JSON object for testing -- will come from db
 var events = [
     {
