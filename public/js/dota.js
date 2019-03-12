@@ -1,4 +1,5 @@
 //hello
+//hello from tyler
 //Basic JSON object for testing -- will come from db
 var events = [
     {
