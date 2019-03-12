@@ -10,9 +10,8 @@ router.get('/', cors(), function(req, res){
 });
 
 router.get('/test', function(req, res){
-    res.sendFile('timer.JSON', {
-        root: __dirname + '../data'
-    });
+    res.send("test");
+    console.log(__dirname);
 });
 
 module.exports = router;
