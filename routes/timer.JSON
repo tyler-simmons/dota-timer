@@ -1,46 +1,26 @@
 {
-    "timer1" : {
+    "newTimer" : {
         "Author" : "Tyler",
         "Data" : [
             {
-                "time" : 15,
-                "action" : "Check Map"
+                "event" : "bounty runes",
+                "timeStamps" : [
+                    0, 300, 600, 900, 1200, 1500, 1800, 2100, 2400, 2700, 3000, 3300, 3600, 3900,
+                    4200, 4500, 4800, 5100, 5400
+                ]
             },
             {
-                "time" : 30,
-                "action" : "Check Map"
+                "event" : "check map",
+                "timeStamps" : [
+                    30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480,
+                    510, 540, 570, 600, 630
+                ]
             },
             {
-                "time" : 60,
-                "action" : "Stack camps"
-            },
-            {
-                "time" : 90,
-                "action" : "Check Map"
-            },
-            {
-                "time" : 120,
-                "action" : "Stack camps"
-            },
-            {
-                "time" : 180,
-                "action" : "Stack camps"
-            },
-            {
-                "time" : 240,
-                "action" : "Stack camps"
-            },
-            {
-                "time" : 360,
-                "action" : "Grab runes"
-            },
-            {
-                "time" : 420,
-                "action" : "Stack camps"
-            },
-            {
-                "time" : 480,
-                "action" : "Stack camps"
+                "event" : "stack camps",
+                "timeStamps" : [
+                    45, 60, 90, 135, 180, 225, 270, 315, 360, 405, 450, 495, 540, 585
+                ]
             }
         ]
     }

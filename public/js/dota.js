@@ -1,15 +1,3 @@
-//Basic JSON object for testing -- will come from db
-var events = [
-    {
-        name: "place ward"
-    },
-    {
-        name: "get bounty rune"
-    },
-    {
-        name: "check map"
-    }
-]
 
 //testing object
 var timerLocal = {
@@ -41,6 +29,25 @@ var timerLocal = {
 $(document).ready(function(){
     //select DOM elements that will be needed
     //store the jQuery OBJECTS 
+    $('#menubtn-icon').on('click', function(){
+        $('#sideNav').addClass('util-sidenav-open');
+        $('main').css('margin-left', '230px');
+    });
+
+    $('#closebtn').on('click', function(){
+        $('#sideNav').removeClass('util-sidenav-open');
+        $('main').css('margin-left', '0px');
+    });
+
+    $('main').on('click', function() {
+        if ($('#sideNav').hasClass('util-sidenav-open')){
+            $('#sideNav').removeClass('util-sidenav-open');
+            $('main').css('margin-left', '0px');
+        }
+    });
+    
+    
+    
     var displayTest = $('#timer'),
         startButton = $('#timer-start'),
         mainDisplay = $('.main-display');
@@ -55,6 +62,7 @@ $(document).ready(function(){
 //1. Imports data from 
 function Dota(timerDisplay, startButton, mainDisplay) {
     
+    var audio = new Audio('../audio/light.mp3');
     //take the argument references to the jQuery
     //DOM elements and assign them to this
     //instance
@@ -79,7 +87,9 @@ function Dota(timerDisplay, startButton, mainDisplay) {
         .then((data) => {
             //When the promise created by our request is 
             //fulfilled, take our data and import it
-            importData(data.timer1.Data);
+            console.log(data.newTimer.Data);
+            importDataNew(data.newTimer.Data);
+            setLastEventTime(data.newTimer.Data);
         })
         .catch((err) => {
             console.log(err);
@@ -94,7 +104,7 @@ function Dota(timerDisplay, startButton, mainDisplay) {
 
     //DOM manipulator - append an event to the main display
     function appendToList(action) {
-        mainDisplay.append(`<li>${action}</li>`);
+        mainDisplay.prepend(`<li>${action}</li>`);
     }
 
     //Attempt to apply the click listener to the
@@ -111,42 +121,72 @@ function Dota(timerDisplay, startButton, mainDisplay) {
     //Take in the Data section of timer object
     //and extract necessary info ->
     //gets last event time and populates event cache 
-    function importData(timerData) {
-        //get the time of final event
-        lastEventTime = timerData[timerData.length - 1].time;
-        eventCache = new Array(lastEventTime);
-        //mem for array is not populate on declaration so it
-        //needs to be filled with default value
-        eventCache.fill(-1);
-        timerData.forEach((event) => {
-            //populate the cache (index = seconds elapsed)
-            eventCache[event.time] = event.action;
-        });
-    }
+    // function importData(timerData) {
+    //     //get the time of final event
+    //     lastEventTime = timerData[timerData.length - 1].time;
+    //     //eventCache = new Array(lastEventTime);
+    //     //mem for array is not populate on declaration so it
+    //     //needs to be filled with default value
+    //     eventCache.fill(-1);
+    //     timerData.forEach((event) => {
+    //         //populate the cache (index = seconds elapsed)
+    //         eventCache[event.time] = event.action;
+    //     });
+    // }
 
     
+    function EventTimeModel(addEvent) {
+        this.events = [addEvent];
+    }
+
+    function setLastEventTime(timerData) {
+        let timeStampList = new Array();
+        for (let i = 0; i < timerData.length; i++) {
+            timeStampList.push(...timerData[i].timeStamps);
+        }
+        lastEventTime = Math.max(...timeStampList);
+    }
+
     //USED FOR UPDATED TIMER SCHEMA
     //DEV BRNACH ONLY
-    function importDataNew(timerImport) {
-        let dataImport = timerImport.Data;
-        for (let i = 0; i < dataImport.length; i++) {
-            dataImport[i].timeStamps
+    function importDataNew(timerData) {
+        
+        
+        //Use a map for O(1) accessing
+        eventCache = new Map();
+        for (let i = 0; i < timerData.length; i++) {
+            //Go through all the timestamps of of this 'event type'
+            timerData[i].timeStamps.forEach(function (time) {
+                if (eventCache.has(time)) {
+                    eventCache.get(time).events.push(this[i].event);
+                    console.log(`Overlap @ time ${time} - ${eventCache.get(time).events}`);
+                } else {
+                    eventCache.set(time, new EventTimeModel(this[i].event));
+                }
+            //reference the data import with 'this'
+            }, timerData);
         }
     }
 
+    this.newTest = function() {
+        importDataNew(timerLocal.Data);
+        console.log(eventCache.get(0));
+        console.log(eventCache.get(210));
+    }
     
     //called each second - references the cache to see if
     //there is an event at elapsedTime (in seconds) and 
     //updated the display accordingly - stops timer if 
     //last event time is reached
     function resolveTime(elapsedTime) {
-        //current action only needs to exist in this scope (referenced from cache)
-        let currentAction = eventCache[elapsedTime];
-        console.log(`Time: ${elapsedTime}, Action: ${currentAction}`);
-        //if there's anything other than defulat value - add to display
-        if (currentAction !== -1) {
-            appendToList(currentAction);
+        if (eventCache.has(elapsedTime)) {
+            audio.play();
+            console.log(`Event at time ${elapsedTime}: ${eventCache.get(elapsedTime).events}`);
+            eventCache.get(elapsedTime).events.forEach((event => {
+                appendToList(event);
+            }))
         }
+
         //check to see if it's the time of last event
         if (elapsedTime === lastEventTime) {
             clearInterval(timeController);
@@ -173,10 +213,10 @@ function Dota(timerDisplay, startButton, mainDisplay) {
     function startTimer() {
         //need to assign to member variable to enable stop/pause
         timeController = setInterval(function(){
-            //update timer display
-            updateTimer(elapsedTimeSec);
             //check against cache for event
             resolveTime(elapsedTimeSec);
+            //update timer display
+            updateTimer(elapsedTimeSec);
             elapsedTimeSec++;
         }, 1000);
     }
@@ -188,32 +228,5 @@ function Dota(timerDisplay, startButton, mainDisplay) {
     }
 }
 
-
-
-//db has all of the 'events'
-//db contains 'timers'
-//A timer is just an ordering of events
-//maybe with some metadata
-//Sample timer
-
-//In the frontend - need an array with
-//each index representing a second
-//load the array on init - get data from server
-//each second, have frontend check against
-//the array
-
-//Make ajax call to server
-//have server query db and then
-//send some JSON or some other
-//encoding to fill the cache array
-
-//UX Thoughts
-//User brought to dashboard
-//User selects timer (query db for 'timers')
-//--maybe have a defualt timer and then allow custom timers
-//wait for timer to load
-//give a start button 
-//user presses start button
-//
 
 //steam api key 59862AC34A6CD31B5E2A435A9C65C5DB
